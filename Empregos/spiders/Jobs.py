@@ -1,5 +1,6 @@
 import scrapy
 import json
+from Empregos.items import EmpregosItem
 
 
 class JobsSpider(scrapy.Spider):
@@ -28,7 +29,7 @@ class JobsSpider(scrapy.Spider):
                 method="GET",
                 callback=self.collecting_data
             )   
-        yield from self.next_page(response)
+        yield   from self.next_page(response)
 
     def collecting_data(self, response):
         
@@ -39,10 +40,15 @@ class JobsSpider(scrapy.Spider):
                 "title": json_info["title"],
                 "company_name": json_info["hiringOrganization"]["name"],
                 "location": json_info["jobLocation"]["address"]["addressLocality"],
-               "description": json_info["description"].replace("\r\r","").replace("\r", "")
+                "description": json_info["description"].replace("\r\r","").replace("\r", ""),
+                "salary": response.xpath('//div[@class="grow w-full"]/h2[2]/text()').get().replace("\n  ","").replace("A partir de ","").replace("\n","").replace("Acima de ","")
         }
+        yield EmpregosItem(
+                data
+            )
     
-    def next_page(self, response):
+    def next_page(self, response): 
         page = response.xpath('//div[@class="pagination-list area-paginacao"]/a[@title="Próximo"]/@href').get()
+       
         if page:
             yield from self.request_page(page)
