@@ -49,6 +49,6 @@ class JobsSpider(scrapy.Spider):
     
     def next_page(self, response): 
         page = response.xpath('//div[@class="pagination-list area-paginacao"]/a[@title="Próximo"]/@data-valor').get()
-        print(page)
+      
         if page:
             yield from self.request_page(page)

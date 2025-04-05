@@ -5,10 +5,9 @@ import os
 class Mysql_Connector:
     def Connection():
         db_connection = mysql.connector.connect(
-        host="127.0.0.1",
-        port=3306,
-        user="root",
-        password="998674629Th.",
+        host=os.getenv("mysqlhost"),
+        user=os.getenv("mysqluser"),
+        password=os.getenv("mysqlpassword"),
         database="Empregos"
         )
 
@@ -20,3 +19,5 @@ class Mysql_Connector:
         cursor = db_connection.cursor()
         
         return [cursor, db_connection]
+    
+
