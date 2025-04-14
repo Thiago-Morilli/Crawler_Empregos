@@ -22,7 +22,8 @@ def looking_for_jobs(mensagem):
     cursor = conn[0]
     query = """SELECT title, company_name, type_work, salary, min_salary, max_salary, ref
     FROM Empregos 
-    WHERE location = %s"""
+    WHERE location = %s
+    LIMIT 10"""
     cursor.execute(query, (cidade,))
     jobs = cursor.fetchall()
     
