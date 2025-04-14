@@ -73,4 +73,4 @@ class JobsSpider(scrapy.Spider):
             combine_salary =response.xpath('//div[@class="js_applyVacancyHidden js_visibleWhileKillers"   ]/div[2]/div[2]/text()').get()
             self.job_data["max_salary"] = "Salário a combinar"
  
-        
+         
