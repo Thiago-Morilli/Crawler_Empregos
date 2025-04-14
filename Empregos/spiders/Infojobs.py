@@ -1,9 +1,9 @@
 import scrapy
 import json
-from Infojobs.items import InfojobsItem
+from Empregos.items import EmpregosItem
 
 class JobsSpider(scrapy.Spider):
-    name = "Jobs"
+    name = "Infojobs"
     domains = "https://www.infojobs.com.br"
     search = "/empregos.aspx?palabra=python"
     headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36"}  
@@ -16,7 +16,7 @@ class JobsSpider(scrapy.Spider):
                 headers=self.headers,
                 callback=self.parse
         )
-
+ 
     def parse(self, response):
         for get_link in response.xpath('//div[@class="d-flex "]/div/a/@href').getall():
             link = self.domains + get_link
@@ -53,7 +53,7 @@ class JobsSpider(scrapy.Spider):
 
             yield  self.processing_data(response)
 
-        yield InfojobsItem(
+        yield EmpregosItem(
                self.job_data
             )
             
@@ -72,5 +72,5 @@ class JobsSpider(scrapy.Spider):
         except:
             combine_salary =response.xpath('//div[@class="js_applyVacancyHidden js_visibleWhileKillers"   ]/div[2]/div[2]/text()').get()
             self.job_data["max_salary"] = "Salário a combinar"
-
+ 
         

@@ -4,7 +4,7 @@ from Empregos.items import EmpregosItem
 
 
 class JobsSpider(scrapy.Spider):
-    name = "Jobs"
+    name = "empregos"
     domains = "https://www.empregos.com.br/vagas/"
     search = "/python"
 
@@ -27,7 +27,7 @@ class JobsSpider(scrapy.Spider):
             yield scrapy.Request(
                 url=link,
                 method="GET",
-                callback=self.collecting_data
+                callback=self.collecting_data 
             )   
         yield from self.next_page(response)
 
@@ -52,3 +52,4 @@ class JobsSpider(scrapy.Spider):
       
         if page:
             yield from self.request_page(page)
+ 

@@ -1,13 +1,13 @@
 import scrapy
 import json
 import re
-from Net_Empregos.items import NetEmpregosItem
+from Empregos.items import EmpregosItem
 
 class EmpregosSpider(scrapy.Spider):
-    name = "Empregos"
+    name = "Net_Empregos"
     domain = "https://www.net-empregos.com/pesquisa-empregos.asp?chaves=python&cidade=&categoria=0&zona=0&tipo=0"
 
-
+ 
     def start_requests(self):
         
         yield scrapy.Request(
@@ -62,16 +62,15 @@ class EmpregosSpider(scrapy.Spider):
 
         Ref = response.xpath('//div[@class="candidate-listing-footer"]/ul/li[3]/text()').extract_first()
         collecting_data  = {
-            "Name": json_info["title"],
-            "Description": json_info["description"].replace("\n \n", "").replace("\n", ""),
-            "Organization": json_info["hiringOrganization"]["name"],
-            "Location": json_info["jobLocation"]["address"]["addressLocality"],
-            "Ref": Ref
+            "title": json_info["title"],
+            "description": json_info["description"].replace("\n \n", "").replace("\n", ""),
+            "company_name": json_info["hiringOrganization"]["name"],
+            "location": json_info["jobLocation"]["address"]["addressLocality"],
+            "ref": Ref
 
-        }   
-
-        
-        yield NetEmpregosItem(
+        }  
+    
+        yield EmpregosItem(
                 collecting_data
             )
-
+ 

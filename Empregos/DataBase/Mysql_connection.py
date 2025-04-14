@@ -2,7 +2,7 @@ import mysql.connector
 import os
 
 
-class Mysql_Connector:
+class Mysql_Connector:  
     def Connection():
         db_connection = mysql.connector.connect(
         host=os.getenv("mysqlhost"),
@@ -21,3 +21,4 @@ class Mysql_Connector:
         return [cursor, db_connection]
     
 
+ 
