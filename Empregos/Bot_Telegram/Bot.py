@@ -4,11 +4,11 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from DataBase.Mysql_connection import Mysql_Connector
 
-CHAVE_API = "7594338375:AAEfZMrMETc7_8Kehdh4gvBlWFmkDFE4VNY"
+CHAVE_API=os.getenv("TELEGRAM_BOT_API_KEY")
 
 bot = telebot.TeleBot(CHAVE_API)
 
-
+ 
 @bot.message_handler(func=lambda msg: True)
 def user(mensagem):
     chat_id = mensagem.chat.id
